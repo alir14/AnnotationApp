@@ -1,0 +1,6 @@
+.annotationCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Make canvas click-through when not annotating */
+}
