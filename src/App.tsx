@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useRef } from 'react';
-import "./bootstrap.scss";
-import "./App.css";
-import AnnotationPalyer from './components/player';
+import AnnotationPlayer from './components/player';
 import { useDispatch } from 'react-redux';
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as mediaAnnotationActions from "./store/mediaAnnotation/sagas/actions";
-import classNames from 'classnames';
-
+import AnnotationDataList from './components/annotation';
+import TopMenu from './components/topMenu';
+import "./App.css";
+import "./bootstrap.scss";
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
@@ -20,24 +20,41 @@ const App: React.FC = () => {
             const newVideoURL = URL.createObjectURL(file);
 
             dispatch({
-                type: mediaAnnotationActions.SET_Media_File_URL,
+                type: mediaAnnotationActions.SET_MEDIA_FILE_URL,
                 payload: newVideoURL
             } as PayloadAction<string>);
 
             if (playerComponentRef.current) {
-                console.log("focus on player");
                 playerComponentRef.current.focus();
             }
         }
     };
 
     return (
-        <div className="container-flex">
-            <div className={classNames('row', 'menu')} >
-                <input type='file' accept='video/*' tabIndex={100} onChange={handleFileChange} />
-
+        <div className="d-flex">
+            <div className="container-fluid">
+                <div className="row g-2">
+                    <div className="col-12">
+                        <div className="p-2 border bg-light">
+                            <TopMenu handleFileChange={handleFileChange} />
+                        </div>
+                    </div>
+                    <div className="col-12">
+                        <div className="p-2 border bg-light">
+                            <AnnotationPlayer ref={playerComponentRef} />
+                        </div>
+                    </div>
+                </div>
             </div>
-            <AnnotationPalyer ref={playerComponentRef}/>
+            <div className="container-fluid">
+                <div className="row g-2">
+                    <div className="col">
+                        <div className="p-2 border bg-light">
+                            <AnnotationDataList />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

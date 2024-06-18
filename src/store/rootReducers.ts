@@ -1,8 +1,8 @@
 import { PayloadAction, combineReducers } from "@reduxjs/toolkit";
-import viewerReducer from "./mediaAnnotation/slice";
+import mediaAnnotation from "./mediaAnnotation/slice";
 
 const allReducers = combineReducers({
-  ifcVeiwer: viewerReducer
+  mediaAnnotationState: mediaAnnotation
 });
 
 export type RootStateType = ReturnType<typeof allReducers>;
