@@ -1,6 +1,20 @@
-.annotationCanvas {
-    position: absolute;
+.video-container {
+    position: relative; /* Needed to position the children absolutely within the container */
+    width: 1028px; /* Set the width of the container */
+    height: 720px; /* Set the height of the container */
+}
+
+.video-container video,
+.video-container canvas {
+    position: absolute; /* Position both the video and canvas absolutely */
     top: 0;
     left: 0;
-    pointer-events: none; /* Make canvas click-through when not annotating */
+    width: 100%; /* Make them fill the container */
+    height: 100%;
+}
+
+.annotationCanvas {
+    pointer-events: auto; /* Ensure the canvas is interactable */
+    background-color: aqua;
+    opacity: 0.3;
 }

@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { cleanErrorData } from "../shared";
 import { Annotation } from "entities";
 
-
 export interface MediaAnnotationState {
     mediaFileUrl?: string;
     annotationData: Annotation[];
