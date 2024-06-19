@@ -1,6 +1,6 @@
 export interface Annotation {
     id: number;
-    classId: number;
+    classId: string;
     startX: number;
     startY: number;
     endX: number;

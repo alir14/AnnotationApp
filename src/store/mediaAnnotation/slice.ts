@@ -5,16 +5,18 @@ import { Annotation } from "entities";
 export interface MediaAnnotationState {
     mediaFileUrl?: string;
     annotationData: Annotation[];
+    saveValidationFalg: boolean;
     error: any;
 }
 
 export const initMediaAnnotationState: MediaAnnotationState = {
     error: '',
+    saveValidationFalg: false,
     annotationData: []
 }
 
 const playerSlice = createSlice({
-    name: 'ifcViewer',
+    name: 'PalayerState',
     initialState: initMediaAnnotationState,
     reducers: {
         setMediaFileURL: (state, action: PayloadAction<string>) => {
@@ -25,6 +27,9 @@ const playerSlice = createSlice({
         },
         setAnnotationError: (state, action: PayloadAction<any>) => {
             state.error = action.payload;
+        },
+        setSaveValidationFlag: (state, action: PayloadAction<boolean>) => {
+            state.saveValidationFalg = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -37,7 +42,8 @@ const playerSlice = createSlice({
 export const {
     setMediaFileURL,
     setAnnotationData,
-    setAnnotationError
+    setAnnotationError,
+    setSaveValidationFlag
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

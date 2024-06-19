@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import * as mediaAnnotationActions from "../../store/mediaAnnotation/sagas/actions";
 import { PayloadAction } from '@reduxjs/toolkit';
 import { getAnnotationData } from '../../store/mediaAnnotation/selectors';
+import { getSelectedAnnotationClass } from '../../store/annotateClasses/selectors';
 
 
 const AnnotationPalyer = forwardRef((props, ref: any) => {
@@ -16,7 +17,7 @@ const AnnotationPalyer = forwardRef((props, ref: any) => {
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
     const [start, setStart] = useState({ x: 0, y: 0 });
     const annotationList = useSelector(getAnnotationData);
-
+    const selectedAnnotationClass = useSelector(getSelectedAnnotationClass);
 
     const videoURL = useSelector(getMediaFileURL);
     const dispatch = useDispatch();
@@ -120,7 +121,7 @@ const AnnotationPalyer = forwardRef((props, ref: any) => {
 
         const annotation: Annotation = {
             id: Date.now(),
-            classId: 1,
+            classId: selectedAnnotationClass,
             startX: x1 / canvasRef.current.width,
             startY: y1 / canvasRef.current.height,
             endX: x2 / canvasRef.current.width,
@@ -130,10 +131,22 @@ const AnnotationPalyer = forwardRef((props, ref: any) => {
         };
         console.log('Annotation saved:', annotation);
         // Store this annotation or send it to a server
-        dispatch({
-            type: mediaAnnotationActions.SAVE_ANNOTATION,
-            payload: annotation
-        } as PayloadAction<Annotation>);
+        if (selectedAnnotationClass && selectedAnnotationClass.trim() !== '') {
+            dispatch({
+                type: mediaAnnotationActions.SAVE_ANNOTATION,
+                payload: annotation
+            } as PayloadAction<Annotation>);
+
+            dispatch({
+                payload: false,
+                type: mediaAnnotationActions.SET_SAVE_VALIDATION_FLAG
+            } as PayloadAction<boolean>);
+        } else {
+            dispatch({
+                payload: true,
+                type: mediaAnnotationActions.SET_SAVE_VALIDATION_FLAG
+            } as PayloadAction<boolean>);
+        }
     }
 
     const handleOnLoadVideoMetaData = (event: SyntheticEvent<HTMLVideoElement>) => {

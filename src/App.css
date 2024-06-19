@@ -1,8 +1,4 @@
-.Container {
-    background-color: gray;
-    width: 100%;
-}
-
-.containerAnnotateTest {
-    background-color: coral;
+.scrollable-sidebar {
+    max-height: 800px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enables vertical scrolling */
 }

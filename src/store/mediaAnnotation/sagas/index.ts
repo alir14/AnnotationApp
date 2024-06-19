@@ -4,7 +4,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import {
     setMediaFileURL,
     setAnnotationData,
-    setAnnotationError
+    setAnnotationError,
+    setSaveValidationFlag
 } from "../slice";
 import { Annotation } from "../../../entities";
 import { getAnnotationData } from "../selectors";
@@ -16,6 +17,7 @@ export function* watchViewerSaga() {
 
     yield takeLatest(actions.DELETE_ANNOTATION, deleteAnnotationSaga);
 
+    yield takeLatest(actions.SET_SAVE_VALIDATION_FLAG, setSaveValidationFlagSaga);
 }
 
 export function* setMediaFileURLSaga(action: PayloadAction<string>) {
@@ -50,4 +52,8 @@ console.log(updatedList);
         yield put(setAnnotationError(error));
     }
 
+}
+
+export function* setSaveValidationFlagSaga(action:PayloadAction<boolean>){
+    yield put(setSaveValidationFlag(action.payload));
 }

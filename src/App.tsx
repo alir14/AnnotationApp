@@ -7,9 +7,17 @@ import AnnotationDataList from './components/annotation';
 import TopMenu from './components/topMenu';
 import "./App.css";
 import "./bootstrap.scss";
+import AnnotationClassSidebar from './components/annotationClassSidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import ClassModal from './components/classModal';
+import WarningMessage from './components/warningComponent';
+import { useSelector } from 'react-redux';
+import { getSaveValidationFlag } from './store/mediaAnnotation/selectors';
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
+    const saveValidationFlag = useSelector(getSaveValidationFlag);
 
     const playerComponentRef = useRef<any>(null);
 
@@ -32,6 +40,21 @@ const App: React.FC = () => {
 
     return (
         <div className="d-flex">
+            {/* modal */}
+            {saveValidationFlag && <WarningMessage message='Please select a class first.' />}
+
+            <ClassModal />
+            <div className="container">
+                <div className="row">
+                    <p>Classes</p>
+                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <FontAwesomeIcon icon={faAdd} />
+                    </button>
+                </div>
+                <div className="row scrollable-sidebar">
+                    <AnnotationClassSidebar />
+                </div>
+            </div>
             <div className="container-fluid">
                 <div className="row g-2">
                     <div className="col-12">
@@ -49,7 +72,7 @@ const App: React.FC = () => {
             <div className="container-fluid">
                 <div className="row g-2">
                     <div className="col">
-                        <div className="p-2 border bg-light">
+                        <div className="p-2 border bg-light scrollable-sidebar">
                             <AnnotationDataList />
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 .listStyle{
     width: 100%;
-    max-width: 460px; 
-    max-height: 500px;
+    max-width: 500px; 
+    max-height: 800px;
     overflow-y: auto;
 }
