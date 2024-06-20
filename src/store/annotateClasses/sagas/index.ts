@@ -17,6 +17,10 @@ export function* setAnnotationClassesSaga(action: PayloadAction<string>) {
         const classes: string[] = yield select(getAnnotationClasses);
 
         yield put(setAnnotationClasses([...classes, action.payload]));
+
+        if (classes.length == 0) {
+            yield put(setSelectedAnnotationClasses(action.payload));
+        }
     }
     catch (e) {
         const error = (e instanceof Error) ? e.message : e;
